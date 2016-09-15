@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+    <CheckBox 
+        android:id="@+id/cb_config_item_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+    
+    <TextView 
+        android:id="@+id/tv_config_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:layout_toLeftOf="@id/cb_config_item_value"
+        android:text="Title"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+    
+    <TextView 
+        android:id="@+id/tv_config_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_config_item_title"
+        android:layout_toLeftOf="@id/cb_config_item_value"
+        android:paddingLeft="12dp"
+        android:paddingBottom="8dp"
+        android:text="Description"
+        android:textSize="14sp"
+        />
+
+    <View 
+        android:layout_below="@id/tv_config_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#C3D6F8"
+        />
+	    
+</RelativeLayout>

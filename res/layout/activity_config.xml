@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itheima="http://schemas.android.com/apk/res/com.itheima.mobilesafe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:text="设置中心"
+        style="@style/TitleStyle"
+        />
+    
+    <com.itheima.mobilesafe.ui.ConfigItemTrueFalseView
+        android:id="@+id/config_item_config_show_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        itheima:config_item_title="是否提示程序升级"
+        itheima:config_item_description="在程序启动时，是否提示程序升级"
+        >
+        
+    </com.itheima.mobilesafe.ui.ConfigItemTrueFalseView>
+    
+</LinearLayout>

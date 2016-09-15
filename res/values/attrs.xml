@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ConfigItemTrueFalseView">
+
+        <!-- config item title -->
+        <attr name="config_item_title" format="string" />
+        
+        <!-- config item description -->
+        <attr name="config_item_description" format="string" />
+        
+    </declare-styleable>
+
+</resources>
