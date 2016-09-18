@@ -1,34 +1,25 @@
 package com.itheima.mobilesafe.activity.antithief;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 
 import com.itheima.mobilesafe.R;
 
-public class InitConfigSecondActivity extends ActionBarActivity{
+public class InitConfigSecondActivity extends BaseInitConfigActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_init_config_second);
 	}
-	
-	public void nextConfig(View view){
-		Intent intent = new Intent(this,InitConfigThirdActivity.class);
-		startActivity(intent);
-		finish();
-		
-		overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exit_anim);
-	}
-	
-	public void previousConfig(View view){
-		Intent intent = new Intent(this,InitConfigFirstActivity.class);
-		startActivity(intent);
-		finish();
 
-		overridePendingTransition(R.anim.previous_enter_anim, R.anim.previous_exit_anim);
+	@Override
+	protected Class<?> getNextConfigActivity() {
+		return InitConfigThirdActivity.class;
+	}
+
+	@Override
+	protected Class<?> getPreviousConfigActivity() {
+		return InitConfigFirstActivity.class;
 	}
 	
 }

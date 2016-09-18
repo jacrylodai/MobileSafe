@@ -3,15 +3,13 @@ package com.itheima.mobilesafe.activity.antithief;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 
 import com.itheima.mobilesafe.R;
 import com.itheima.mobilesafe.domain.ConfigInfo;
 
-public class InitConfigFourthActivity extends ActionBarActivity{
+public class InitConfigFourthActivity extends BaseInitConfigActivity{
 	
-	SharedPreferences pref;
+	private SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +18,8 @@ public class InitConfigFourthActivity extends ActionBarActivity{
 		
 		pref = getSharedPreferences(ConfigInfo.CONFIG_FILE_NAME, MODE_PRIVATE);
 	}
-	
-	public void nextConfig(View view){
+
+	protected void showNextConfig(){
 		
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putBoolean(ConfigInfo.IS_ANTI_THIEF_INIT_CONFIG_KEY, true);
@@ -31,13 +29,10 @@ public class InitConfigFourthActivity extends ActionBarActivity{
 		startActivity(intent);
 		finish();
 	}
-	
-	public void previousConfig(View view){
-		Intent intent = new Intent(this,InitConfigThirdActivity.class);
-		startActivity(intent);
-		finish();
 
-		overridePendingTransition(R.anim.previous_enter_anim, R.anim.previous_exit_anim);
-	}
+	@Override
+	protected Class<?> getPreviousConfigActivity() {
+		return InitConfigThirdActivity.class;		
+	}	
 	
 }
