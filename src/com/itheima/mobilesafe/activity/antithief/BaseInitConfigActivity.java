@@ -3,13 +3,13 @@ package com.itheima.mobilesafe.activity.antithief;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
+import com.itheima.mobilesafe.utils.log.LogUtil;
 
 public abstract class BaseInitConfigActivity extends ActionBarActivity{
 
@@ -27,8 +27,8 @@ public abstract class BaseInitConfigActivity extends ActionBarActivity{
 			public boolean onFling(MotionEvent e1, MotionEvent e2,
 					float velocityX, float velocityY) {
 				
-				Log.d(TAG, "e1-rawX:"+e1.getRawX()+"  rawY:"+e1.getRawY());
-				Log.d(TAG, "e2-rawX:"+e2.getRawX()+"  rawY:"+e2.getRawY());
+				LogUtil.d(TAG, "e1-rawX:"+e1.getRawX()+"  rawY:"+e1.getRawY());
+				LogUtil.d(TAG, "e2-rawX:"+e2.getRawX()+"  rawY:"+e2.getRawY());
 				
 				if(Math.abs(e2.getRawY() - e1.getRawY()) >300){
 					Toast.makeText(BaseInitConfigActivity.this, "纵向滑动幅度过大"

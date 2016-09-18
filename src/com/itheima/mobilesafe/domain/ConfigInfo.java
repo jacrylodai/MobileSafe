@@ -23,11 +23,6 @@ public class ConfigInfo {
 	 */
 	public static final String IS_ANTI_THIEF_PROTECT_PASSWORD_SET_KEY = 
 			"isAntiThiefProtectPasswordSetKey";
-
-	public static boolean getIsAntiThiefProtectPasswordSetKey(
-			SharedPreferences pref){
-		return pref.getBoolean(IS_ANTI_THIEF_PROTECT_PASSWORD_SET_KEY, false);
-	}
 	
 	/**
 	 * 手机防盗密码
@@ -39,8 +34,14 @@ public class ConfigInfo {
 	 */
 	public static final String IS_ANTI_THIEF_INIT_CONFIG_KEY = "isAntiThiefInitConfigKey";
 	
-	public static boolean getIsAntiThiefInitConfig(SharedPreferences pref){
-		return pref.getBoolean(IS_ANTI_THIEF_INIT_CONFIG_KEY, false);
-	}
+	/**
+	 * 是否绑定SIM卡
+	 */
+	public static final String IS_BIND_SIM_CARD_KEY = "isBindSIMCardKey";
+	
+	/**
+	 * 绑定的SIM卡序列号
+	 */
+	public static final String SIM_CARD_SERIAL_NUMBER_KEY = "SIMCardSerialNumberKey"; 
 	
 }

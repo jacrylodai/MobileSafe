@@ -6,13 +6,11 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +27,7 @@ import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.domain.FunctionItem;
 import com.itheima.mobilesafe.utils.encrypt.ByteUtils;
 import com.itheima.mobilesafe.utils.encrypt.EncryptUtils;
+import com.itheima.mobilesafe.utils.log.LogUtil;
 
 /**
  * 主界面
@@ -67,7 +66,7 @@ public class HomeActivity extends ActionBarActivity {
 					int position, long id) {
 
 				FunctionItem functionItem = functionItemList.get(position);
-				Log.d(TAG, functionItem.getName());
+				LogUtil.d(TAG, functionItem.getName());
 				
 				int functionId = functionItem.getFunctionId();
 				switch (functionId) {
@@ -133,7 +132,7 @@ public class HomeActivity extends ActionBarActivity {
 	private void checkIsAntiTheifProtectPasswordSet(){
 		
 		boolean isProtectPasswordSet = 
-				ConfigInfo.getIsAntiThiefProtectPasswordSetKey(pref);
+				pref.getBoolean(ConfigInfo.IS_ANTI_THIEF_PROTECT_PASSWORD_SET_KEY, false);
 		if(isProtectPasswordSet){
 			showCheckProtectPasswordDialog();
 		}else{
@@ -177,7 +176,7 @@ public class HomeActivity extends ActionBarActivity {
 				
 				if(realProtectPasswordEnc.equals(protectPasswordEnc)){
 					
-					Log.d(TAG, "你输入的保护密码正确");
+					LogUtil.d(TAG, "你输入的保护密码正确");
 					
 					startAntiThief();
 					checkProtectPasswordDialog.dismiss();
@@ -293,8 +292,7 @@ public class HomeActivity extends ActionBarActivity {
 	 */
 	private void startAntiThief(){
 		
-		boolean isInitConfig = 
-				ConfigInfo.getIsAntiThiefInitConfig(pref);
+		boolean isInitConfig = pref.getBoolean(ConfigInfo.IS_ANTI_THIEF_INIT_CONFIG_KEY, false);
 		if(isInitConfig){
 			Intent intent = new Intent(this,LostFindActivity.class);
 			startActivity(intent);

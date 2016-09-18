@@ -26,6 +26,7 @@
         />
     
     <com.itheima.mobilesafe.ui.ConfigItemTrueFalseView 
+        android:id="@+id/ci_init_config_bind_sim_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         itheima:config_item_title="设置是否绑定SIM卡"

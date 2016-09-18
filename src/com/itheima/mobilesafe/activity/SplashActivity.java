@@ -71,7 +71,7 @@ public class SplashActivity extends ActionBarActivity {
 			
 			case NETWORK_ERROR:
 
-				LogUtil.i(TAG, "网络异常");		
+				LogUtil.d(TAG, "网络异常");		
 				Toast.makeText(getApplicationContext()
 						, "网络异常", Toast.LENGTH_SHORT).show();
 				enterHome();
@@ -79,7 +79,7 @@ public class SplashActivity extends ActionBarActivity {
 
 			case JSON_ERROR:
 
-				LogUtil.i(TAG, "JSON解析异常");		
+				LogUtil.d(TAG, "JSON解析异常");		
 				Toast.makeText(SplashActivity.this
 						, "JSON解析异常", Toast.LENGTH_SHORT).show();
 				enterHome();
@@ -87,13 +87,13 @@ public class SplashActivity extends ActionBarActivity {
 
 			case ENTER_HOME:
 				
-				LogUtil.i(TAG, "进入主界面");				
+				LogUtil.d(TAG, "进入主界面");				
 				enterHome();
 				break;
 
 			case UPDATE_DIALOG:
 
-				LogUtil.i(TAG, "弹出升级对话框");
+				LogUtil.d(TAG, "弹出升级对话框");
 				showUpdateDialog();
 				break;
 				
@@ -282,7 +282,7 @@ public class SplashActivity extends ActionBarActivity {
 					}
 				}
 				
-				LogUtil.i(TAG, response);
+				LogUtil.d(TAG, response);
 				try {
 					serverAPKInfo = ServerAPKInfo.buildFromJson(response);
 				} catch (JSONException e) {

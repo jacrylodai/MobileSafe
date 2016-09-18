@@ -30,11 +30,25 @@ public class LogUtil {
 			Log.v(tag, msg);
 		}
 	}
+
+	public static void v(String tag,String msg,Throwable tr){
+		
+		if(CURR_LEVEL <= VERBOSE){
+			Log.v(tag, msg,tr);
+		}
+	}
 	
 	public static void d(String tag,String msg){
 		
 		if(CURR_LEVEL <= DEBUG){
-			Log.d(tag, msg);
+			Log.i(tag, msg);
+		}
+	}
+
+	public static void d(String tag,String msg,Throwable tr){
+		
+		if(CURR_LEVEL <= DEBUG){
+			Log.i(tag, msg,tr);
 		}
 	}
 
@@ -45,10 +59,24 @@ public class LogUtil {
 		}
 	}
 
+	public static void i(String tag,String msg,Throwable tr){
+		
+		if(CURR_LEVEL <= INFO){
+			Log.i(tag, msg,tr);
+		}
+	}
+
 	public static void w(String tag,String msg){
 		
 		if(CURR_LEVEL <= WARN){
 			Log.w(tag, msg);
+		}
+	}
+
+	public static void w(String tag,String msg,Throwable tr){
+		
+		if(CURR_LEVEL <= WARN){
+			Log.w(tag, msg,tr);
 		}
 	}
 

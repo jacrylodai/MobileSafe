@@ -60,7 +60,7 @@ public class HttpConnectionUtil {
 
 					connection.setDoInput(true);
 					
-					LogUtil.i(TAG, "ready to get response code");
+					LogUtil.d(TAG, "ready to get response code");
 					
 					int code = connection.getResponseCode();
 					if(code != 200){
@@ -68,7 +68,7 @@ public class HttpConnectionUtil {
 								+".message:"+connection.getResponseMessage());
 					}
 					
-					LogUtil.i(TAG, "response code:"+code);
+					LogUtil.d(TAG, "response code:"+code);
 					
 					InputStream in = connection.getInputStream();
 					
