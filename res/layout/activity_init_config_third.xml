@@ -21,6 +21,7 @@
         />
     
     <EditText 
+        android:id="@+id/et_alert_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入安全号码或选择联系人"
@@ -28,6 +29,7 @@
         />
     
     <Button 
+        android:id="@+id/button_choose_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ui_light_green"

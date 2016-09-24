@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 
-import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.utils.log.LogUtil;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class BootCompleteReceiver extends BroadcastReceiver {
 

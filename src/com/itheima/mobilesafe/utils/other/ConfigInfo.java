@@ -1,4 +1,4 @@
-package com.itheima.mobilesafe.domain;
+package com.itheima.mobilesafe.utils.other;
 
 import android.content.SharedPreferences;
 
@@ -43,5 +43,10 @@ public class ConfigInfo {
 	 * 绑定的SIM卡序列号
 	 */
 	public static final String SIM_CARD_SERIAL_NUMBER_KEY = "SIMCardSerialNumberKey"; 
+	
+	/**
+	 * 安全号码，报警号码
+	 */
+	public static final String ALERT_PHONE_NUMBER_KEY = "alertPhoneNumberKey";
 	
 }

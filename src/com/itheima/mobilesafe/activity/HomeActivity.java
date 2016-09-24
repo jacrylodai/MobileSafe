@@ -23,11 +23,11 @@ import com.itheima.mobilesafe.R;
 import com.itheima.mobilesafe.activity.antithief.InitConfigFirstActivity;
 import com.itheima.mobilesafe.activity.antithief.LostFindActivity;
 import com.itheima.mobilesafe.adapter.FunctionItemAdapter;
-import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.domain.FunctionItem;
 import com.itheima.mobilesafe.utils.encrypt.ByteUtils;
 import com.itheima.mobilesafe.utils.encrypt.EncryptUtils;
 import com.itheima.mobilesafe.utils.log.LogUtil;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 /**
  * 主界面
@@ -161,8 +161,8 @@ public class HomeActivity extends ActionBarActivity {
 					return;
 				}
 				
-				if(!Pattern.matches("\\w{6,30}", protectPassword)){
-					Toast.makeText(HomeActivity.this, "保护密码只能为字母或数字，并且至少6位"
+				if(!Pattern.matches("\\d{6,30}", protectPassword)){
+					Toast.makeText(HomeActivity.this, "保护密码只能为数字，并且至少6位"
 							, Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -227,8 +227,8 @@ public class HomeActivity extends ActionBarActivity {
 					return;
 				}
 				
-				if(!Pattern.matches("\\w{6,30}", protectPassword)){
-					Toast.makeText(HomeActivity.this, "保护密码只能为字母或数字，并且至少6位"
+				if(!Pattern.matches("\\d{6,30}", protectPassword)){
+					Toast.makeText(HomeActivity.this, "保护密码只能为数字，并且至少6位"
 							, Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -240,8 +240,8 @@ public class HomeActivity extends ActionBarActivity {
 				}
 
 				
-				if(!Pattern.matches("\\w{6,30}", confirmProtectPassword)){
-					Toast.makeText(HomeActivity.this, "确认保护密码只能为字母或数字，并且至少6位"
+				if(!Pattern.matches("\\d{6,30}", confirmProtectPassword)){
+					Toast.makeText(HomeActivity.this, "确认保护密码只能为数字，并且至少6位"
 							, Toast.LENGTH_SHORT).show();
 					return;
 				}

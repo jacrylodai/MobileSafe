@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.domain.ConfigInfo;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class InitConfigFourthActivity extends BaseInitConfigActivity{
 	

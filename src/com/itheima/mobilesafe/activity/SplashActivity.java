@@ -30,11 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.domain.ServerAPKInfo;
 import com.itheima.mobilesafe.utils.http.HttpCallbackListener;
 import com.itheima.mobilesafe.utils.http.HttpConnectionUtil;
 import com.itheima.mobilesafe.utils.log.LogUtil;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 /**
  * 初始化界面，显示程序logo，联网取得最新版本信息，提示升级，下载最新版本并升级

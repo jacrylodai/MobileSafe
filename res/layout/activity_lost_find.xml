@@ -21,17 +21,18 @@
             android:text="安全号码" />
 
         <TextView
+            android:id="@+id/tv_alert_phone_number"
             style="@style/ContentStyle"
             android:layout_alignParentRight="true"
-            android:text="13983568844" />
+            android:text="11111111" />
     </RelativeLayout>
 
-    <ImageView
+    <View 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/listview_divider" 
-        android:scaleType="fitXY"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#C3D6F8"
         />
 
     <RelativeLayout
@@ -55,13 +56,13 @@
             android:scaleType="centerInside"
             />
     </RelativeLayout>
-
-    <ImageView
+    
+    <View 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/listview_divider" 
-        android:scaleType="fitXY"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#C3D6F8"
         />
     
     <RelativeLayout
@@ -84,12 +85,12 @@
 
     </RelativeLayout>
 
-    <ImageView
+    <View 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/listview_divider" 
-        android:scaleType="fitXY"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#C3D6F8"
         />
     
     <TextView 

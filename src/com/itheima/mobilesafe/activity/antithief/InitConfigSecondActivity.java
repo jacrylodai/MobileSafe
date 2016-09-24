@@ -9,9 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.ui.ConfigItemTrueFalseView;
 import com.itheima.mobilesafe.utils.log.LogUtil;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class InitConfigSecondActivity extends BaseInitConfigActivity{
 	

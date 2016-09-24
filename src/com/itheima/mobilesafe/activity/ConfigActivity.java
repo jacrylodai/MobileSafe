@@ -7,9 +7,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.CompoundButton;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.domain.ConfigInfo;
 import com.itheima.mobilesafe.ui.ConfigItemTrueFalseView;
 import com.itheima.mobilesafe.utils.log.LogUtil;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 /**
  * …Ë÷√÷––ƒ
