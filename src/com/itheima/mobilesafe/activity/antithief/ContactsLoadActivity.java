@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.adapter.ContactInfoListAdapter;
 import com.itheima.mobilesafe.domain.ContactInfo;
 import com.itheima.mobilesafe.utils.other.ContactsUtils;
 
