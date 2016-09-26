@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.itheima.mobilesafe.R;
@@ -31,6 +32,16 @@ public class LostFindActivity extends ActionBarActivity {
 			tvAlertPhoneNumber.setText("没有设置安全号码");
 		}else{
 			tvAlertPhoneNumber.setText(alertPhoneNumber);
+		}
+		
+		boolean isAntiThiefProtectOpen = pref.getBoolean(
+				ConfigInfo.IS_ANTI_THIEF_PROTECT_OPEN_KEY, false);
+		
+		ImageView ivAntiThiefProtect = (ImageView) findViewById(R.id.iv_anti_thief_protect);
+		if(isAntiThiefProtectOpen){
+			ivAntiThiefProtect.setImageResource(R.drawable.lock);
+		}else{
+			ivAntiThiefProtect.setImageResource(R.drawable.unlock);
 		}
 	}
 	

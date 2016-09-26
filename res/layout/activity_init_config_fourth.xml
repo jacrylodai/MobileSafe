@@ -11,6 +11,7 @@
         />
     
     <CheckBox 
+        android:id="@+id/cb_set_anti_thief_protect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="设置是否开启防盗保护"

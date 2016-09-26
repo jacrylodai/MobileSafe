@@ -49,4 +49,9 @@ public class ConfigInfo {
 	 */
 	public static final String ALERT_PHONE_NUMBER_KEY = "alertPhoneNumberKey";
 	
+	/**
+	 * 是否开启防盗保护
+	 */
+	public static final String IS_ANTI_THIEF_PROTECT_OPEN_KEY = "isAntiThiefProtectOpenKey";
+	
 }
