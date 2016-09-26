@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
 import com.itheima.mobilesafe.activity.antithief.InitConfigFirstActivity;
+import com.itheima.mobilesafe.activity.antithief.InitConfigFourthActivity;
 import com.itheima.mobilesafe.activity.antithief.LostFindActivity;
 import com.itheima.mobilesafe.adapter.FunctionItemAdapter;
+import com.itheima.mobilesafe.domain.AntiThiefInitConfigParams;
 import com.itheima.mobilesafe.domain.FunctionItem;
 import com.itheima.mobilesafe.utils.encrypt.ByteUtils;
 import com.itheima.mobilesafe.utils.encrypt.EncryptUtils;
@@ -292,14 +294,8 @@ public class HomeActivity extends ActionBarActivity {
 	 */
 	private void startAntiThief(){
 		
-		boolean isInitConfig = pref.getBoolean(ConfigInfo.IS_ANTI_THIEF_INIT_CONFIG_KEY, false);
-		if(isInitConfig){
-			Intent intent = new Intent(this,LostFindActivity.class);
-			startActivity(intent);
-		}else{
-			Intent intent = new Intent(this,InitConfigFirstActivity.class);
-			startActivity(intent);
-		}
+		Intent intent = new Intent(this,LostFindActivity.class);
+		startActivity(intent);
 	}
 	
 }

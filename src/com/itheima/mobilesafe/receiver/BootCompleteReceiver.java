@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 
 import com.itheima.mobilesafe.utils.log.LogUtil;
@@ -38,6 +39,9 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 					LogUtil.d(TAG, "SIM卡没有变更");
 				}else{
 					LogUtil.d(TAG, "危险，SIM卡发生变更");
+					
+					String message = "请注意，你手机上的SIM卡发生变更";
+					SmsManager smsManager = SmsManager.getDefault();
 				}
 			}
 		}

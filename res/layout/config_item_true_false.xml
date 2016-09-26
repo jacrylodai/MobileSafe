@@ -7,9 +7,10 @@
         android:id="@+id/cb_config_item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        style="@style/CustomCheckboxTheme"
         />
     
     <TextView 

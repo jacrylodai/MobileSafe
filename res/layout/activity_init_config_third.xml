@@ -83,13 +83,13 @@
             />
             
         <Button 
-            android:onClick="previousConfig"
+            android:id="@+id/button_previous_config"
             android:text="上一步"
             style="@style/PreviousButtonStyle"
             />
         
         <Button 
-            android:onClick="nextConfig"
+            android:id="@+id/button_next_config"
             android:text="下一步"
             style="@style/NextButtonStyle"
             />

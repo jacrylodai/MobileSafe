@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,8 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
+import com.itheima.mobilesafe.domain.AntiThiefInitConfigParams;
 import com.itheima.mobilesafe.domain.ContactInfo;
-import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class InitConfigThirdActivity extends BaseInitConfigActivity{
 	
@@ -25,22 +24,45 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 
 	private static final int REQUEST_CODE_CHOOSE_CONTACT = 1;
 	
-	private SharedPreferences pref;
-	
 	private EditText etAlertPhoneNumber;
+	
+	private AntiThiefInitConfigParams antiThiefParams;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_init_config_third);
 		
-		pref = getSharedPreferences(ConfigInfo.CONFIG_FILE_NAME, MODE_PRIVATE);
-		String alertPhoneNumber = pref.getString(ConfigInfo.ALERT_PHONE_NUMBER_KEY, "");
+		antiThiefParams = (AntiThiefInitConfigParams) getIntent().getSerializableExtra(
+				InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS);
+		
+		String alertPhoneNumber = antiThiefParams.getAlertPhoneNumber();
 		
 		etAlertPhoneNumber = (EditText) findViewById(R.id.et_alert_phone_number);
 		if(!TextUtils.isEmpty(alertPhoneNumber)){
 			etAlertPhoneNumber.setText(alertPhoneNumber);
 		}
+		etAlertPhoneNumber.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				
+				String phoneNumber = s.toString();
+				phoneNumber = phoneNumber.replaceAll("\\-", "").replaceAll(" ", "");
+				antiThiefParams.setAlertPhoneNumber(phoneNumber);
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				
+			}
+		});
 		
 		Button buttonChooseContact = 
 				(Button)findViewById(R.id.button_choose_contact);
@@ -53,16 +75,51 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 				startActivityForResult(intent, REQUEST_CODE_CHOOSE_CONTACT);
 			}
 		});
+
+		Button buttonNextConfig = (Button) findViewById(R.id.button_next_config);
+		buttonNextConfig.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				showNextConfig();
+			}
+		});
+		
+		Button buttonPreviousConfig = (Button)findViewById(R.id.button_previous_config);
+		buttonPreviousConfig.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				showPreviousConfig();
+			}
+		});
+		
 	}
 
 	@Override
-	protected Class<?> getNextConfigActivity() {
-		return InitConfigFourthActivity.class;
+	protected void showNextConfig(){
+
+		Intent intent = new Intent(this,InitConfigFourthActivity.class);
+
+		intent.putExtra(InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS, antiThiefParams);
+		startActivity(intent);
+		finish();
+		
+		overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exit_anim);
 	}
 
 	@Override
-	protected Class<?> getPreviousConfigActivity() {
-		return InitConfigSecondActivity.class;
+	protected void showPreviousConfig(){
+		
+		Intent intent = new Intent(this,InitConfigSecondActivity.class);
+
+		intent.putExtra(InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS, antiThiefParams);
+		startActivity(intent);
+		finish();
+
+		overridePendingTransition(R.anim.previous_enter_anim, R.anim.previous_exit_anim);
 	}
 	
 	@Override
@@ -94,32 +151,6 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 			super.onActivityResult(requestCode, resultCode, data);
 			break;
 		}
-	}
-
-	protected void showNextConfig(){
-		
-		String phoneNumber = etAlertPhoneNumber.getText().toString();
-		phoneNumber = phoneNumber.replaceAll("\\-", "").replaceAll(" ", "");
-		
-		if(TextUtils.isEmpty(phoneNumber)){
-			Toast.makeText(this, "安全号码不能为空", Toast.LENGTH_SHORT).show();
-			return;
-		}else{
-			saveAlertPhoneNumber(phoneNumber);
-		}
-
-		Intent intent = new Intent(this,getNextConfigActivity());
-		startActivity(intent);
-		finish();
-		
-		overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exit_anim);
-	}
-	
-	private void saveAlertPhoneNumber(String phoneNumber){
-		
-		SharedPreferences.Editor editor = pref.edit();
-		editor.putString(ConfigInfo.ALERT_PHONE_NUMBER_KEY, phoneNumber);
-		editor.commit();
 	}
 	
 }

@@ -30,7 +30,7 @@ public class ConfigInfo {
 	public static final String ANTI_THIEF_PROTECT_PASSWORD_KEY = "antiThiefProtectPasswordKey";
 	
 	/**
-	 * 手机防盗是否进行初始化配置
+	 * 手机防盗是否进行过初始化配置
 	 */
 	public static final String IS_ANTI_THIEF_INIT_CONFIG_KEY = "isAntiThiefInitConfigKey";
 	

@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,8 +40,9 @@ public class ContactsLoadActivity extends ActionBarActivity {
 		
 		lvContactInfoList = (ListView) findViewById(R.id.lv_contact_info_list);
 		
-		ContactInfoListAdapter adapter = 
-				new ContactInfoListAdapter(this, R.layout.list_item_contact_info, contactInfoList);
+		ArrayAdapter<ContactInfo> adapter = 
+				new ArrayAdapter<ContactInfo>(this
+						, android.R.layout.simple_list_item_1, contactInfoList);
 		
 		lvContactInfoList.setAdapter(adapter);
 		lvContactInfoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +54,8 @@ public class ContactsLoadActivity extends ActionBarActivity {
 				ContactInfo contactInfo = (ContactInfo) parent.getItemAtPosition(position);
 				Log.d(TAG, "you click contact:"+contactInfo.getDisplayName());
 				
+				readContactInfoFromSystem(contactInfo);
+				
 				Intent data = new Intent();
 				data.putExtra(EXTRA_CONTACT_INFO, contactInfo);
 				ContactsLoadActivity.this.setResult(RESULT_OK, data);
@@ -59,11 +63,52 @@ public class ContactsLoadActivity extends ActionBarActivity {
 			}
 		});
 	}
+	
+	/**
+	 * 读取联系人电话号码及其他信息
+	 * @param contactInfo
+	 */
+	private void readContactInfoFromSystem(ContactInfo contactInfo){
+		
+		Uri dataUri = Uri.parse(ContactsUtils.Data.CONTENT_URI);
+		long contactId = contactInfo.getContactId();
 
+		Cursor dataCursor = 
+				getContentResolver().query(
+						dataUri
+						, ContactsUtils.Data.PROJECTION
+						, ContactsUtils.Data.SELECTION
+						, new String[]{ String.valueOf(contactId) }
+						, null);
+		
+		if(dataCursor == null){
+			Toast.makeText(this, "无法取得联系人详细信息", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		while(dataCursor.moveToNext()){
+			String mimeType = 
+					dataCursor.getString(
+							dataCursor.getColumnIndex(ContactsUtils.Data.COL_MINE_TYPE));
+			String data1 = 
+					dataCursor.getString(
+							dataCursor.getColumnIndex(ContactsUtils.Data.COL_DATA1));
+			Log.d(TAG, mimeType+"--"+data1);
+			if(mimeType.equals(ContactsUtils.MimeType.MIME_TYPE_PHONE)){
+				contactInfo.addPhoneNumber(data1);
+			}
+				
+		}
+		dataCursor.close();
+		
+	}
+
+	/**
+	 * 仅读取手机中所有的联系人
+	 */
 	private void readContacts() {
 		
 		Uri rawContactsUri = Uri.parse(ContactsUtils.RawContact.CONTENT_URI);
-		Uri dataUri = Uri.parse(ContactsUtils.Data.CONTENT_URI);
 		
 		contactInfoList = new ArrayList<ContactInfo>();
 		
@@ -91,34 +136,6 @@ public class ContactsLoadActivity extends ActionBarActivity {
 			Log.d(TAG, "contactId:"+contactId+"  displayName:"+displayName);
 			contactInfo.setContactId(contactId);
 			contactInfo.setDisplayName(displayName);
-			
-			Cursor dataCursor = 
-					getContentResolver().query(
-							dataUri
-							, ContactsUtils.Data.PROJECTION
-							, ContactsUtils.Data.SELECTION
-							, new String[]{ String.valueOf(contactId) }
-							, null);
-			
-			if(dataCursor == null){
-				Toast.makeText(this, "无法取得联系人详细信息", Toast.LENGTH_SHORT).show();
-				return;
-			}
-			
-			while(dataCursor.moveToNext()){
-				String mimeType = 
-						dataCursor.getString(
-								dataCursor.getColumnIndex(ContactsUtils.Data.COL_MINE_TYPE));
-				String data1 = 
-						dataCursor.getString(
-								dataCursor.getColumnIndex(ContactsUtils.Data.COL_DATA1));
-				Log.d(TAG, mimeType+"--"+data1);
-				if(mimeType.equals(ContactsUtils.MimeType.MIME_TYPE_PHONE)){
-					contactInfo.addPhoneNumber(data1);
-				}
-					
-			}
-			dataCursor.close();
 			
 			contactInfoList.add(contactInfo);
 		}

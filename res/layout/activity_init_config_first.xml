@@ -85,7 +85,7 @@
             />
             
         <Button 
-            android:onClick="nextConfig"
+            android:id="@+id/button_next_config"
             android:text="下一步"
             style="@style/NextButtonStyle"
             />

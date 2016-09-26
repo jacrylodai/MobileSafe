@@ -1,11 +1,11 @@
 package com.itheima.mobilesafe.activity.antithief;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
@@ -50,43 +50,12 @@ public abstract class BaseInitConfigActivity extends ActionBarActivity{
 			}
 			
 		});
-	}
-	
-	public void nextConfig(View view){
 		
-		showNextConfig();
 	}
 	
-	protected Class<?> getNextConfigActivity(){
-		return null;
-	}
+	protected abstract void showNextConfig();
 	
-	protected void showNextConfig(){
-
-		Intent intent = new Intent(this,getNextConfigActivity());
-		startActivity(intent);
-		finish();
-		
-		overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exit_anim);
-	}
-	
-	public void previousConfig(View view){
-		
-		showPreviousConfig();
-	}
-
-	protected Class<?> getPreviousConfigActivity(){
-		return null;
-	}
-	
-	protected void showPreviousConfig(){
-		
-		Intent intent = new Intent(this,getPreviousConfigActivity());
-		startActivity(intent);
-		finish();
-
-		overridePendingTransition(R.anim.previous_enter_anim, R.anim.previous_exit_anim);
-	}
+	protected abstract void showPreviousConfig();
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

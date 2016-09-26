@@ -61,5 +61,9 @@
         <item name="android:background">@drawable/ui_dark_green</item>
         <item name="android:drawableLeft">@drawable/previous</item>
     </style>
-
+    
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">  
+        <item name="android:button">@drawable/check_box_style</item>  
+    </style>
+    
 </resources>
