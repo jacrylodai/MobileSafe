@@ -54,4 +54,14 @@ public class ConfigInfo {
 	 */
 	public static final String IS_ANTI_THIEF_PROTECT_OPEN_KEY = "isAntiThiefProtectOpenKey";
 	
+	/**
+	 * ¾­¶È
+	 */
+	public static final String LOCATION_LONGITUDE_KEY = "locationLongitudeKey";
+
+	/**
+	 * Î³¶È
+	 */
+	public static final String LOCATION_LATITUDE_KEY = "locationLatitudeKey";
+	
 }
