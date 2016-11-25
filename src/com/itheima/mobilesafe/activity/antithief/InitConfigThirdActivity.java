@@ -3,7 +3,9 @@ package com.itheima.mobilesafe.activity.antithief;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,8 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.domain.AntiThiefInitConfigParams;
 import com.itheima.mobilesafe.domain.ContactInfo;
+import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class InitConfigThirdActivity extends BaseInitConfigActivity{
 	
@@ -24,19 +26,18 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 
 	private static final int REQUEST_CODE_CHOOSE_CONTACT = 1;
 	
-	private EditText etAlertPhoneNumber;
+	private SharedPreferences pref;
 	
-	private AntiThiefInitConfigParams antiThiefParams;
+	private EditText etAlertPhoneNumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_init_config_third);
 		
-		antiThiefParams = (AntiThiefInitConfigParams) getIntent().getSerializableExtra(
-				InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS);
+		pref = getSharedPreferences(ConfigInfo.CONFIG_FILE_NAME, Context.MODE_PRIVATE);
 		
-		String alertPhoneNumber = antiThiefParams.getAlertPhoneNumber();
+		String alertPhoneNumber = pref.getString(ConfigInfo.TEMP_ALERT_PHONE_NUMBER_KEY, "");
 		
 		etAlertPhoneNumber = (EditText) findViewById(R.id.et_alert_phone_number);
 		if(!TextUtils.isEmpty(alertPhoneNumber)){
@@ -49,7 +50,10 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 				
 				String phoneNumber = s.toString();
 				phoneNumber = phoneNumber.replaceAll("\\-", "").replaceAll(" ", "");
-				antiThiefParams.setAlertPhoneNumber(phoneNumber);
+				
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putString(ConfigInfo.TEMP_ALERT_PHONE_NUMBER_KEY, phoneNumber);
+				editor.commit();
 			}
 			
 			@Override
@@ -101,9 +105,16 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 	@Override
 	protected void showNextConfig(){
 
+		//业务验证
+		//如果绑定SIM卡，必须设置安全号码
+		boolean isBindSIMCard = pref.getBoolean(ConfigInfo.TEMP_IS_BIND_SIM_CARD_KEY, false);
+		String alertPhoneNumber = pref.getString(ConfigInfo.TEMP_ALERT_PHONE_NUMBER_KEY, "");
+		if(isBindSIMCard == true && TextUtils.isEmpty(alertPhoneNumber)){
+			Toast.makeText(this, "你已经绑定SIM卡，需要设置安全号码", Toast.LENGTH_LONG).show();
+			return;
+		}
+		
 		Intent intent = new Intent(this,InitConfigFourthActivity.class);
-
-		intent.putExtra(InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS, antiThiefParams);
 		startActivity(intent);
 		finish();
 		
@@ -114,8 +125,6 @@ public class InitConfigThirdActivity extends BaseInitConfigActivity{
 	protected void showPreviousConfig(){
 		
 		Intent intent = new Intent(this,InitConfigSecondActivity.class);
-
-		intent.putExtra(InitConfigFourthActivity.EXTRA_ANTI_THIEF_PARAMS, antiThiefParams);
 		startActivity(intent);
 		finish();
 

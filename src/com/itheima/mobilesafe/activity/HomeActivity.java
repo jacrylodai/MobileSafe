@@ -20,11 +20,8 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
-import com.itheima.mobilesafe.activity.antithief.InitConfigFirstActivity;
-import com.itheima.mobilesafe.activity.antithief.InitConfigFourthActivity;
 import com.itheima.mobilesafe.activity.antithief.LostFindActivity;
 import com.itheima.mobilesafe.adapter.FunctionItemAdapter;
-import com.itheima.mobilesafe.domain.AntiThiefInitConfigParams;
 import com.itheima.mobilesafe.domain.FunctionItem;
 import com.itheima.mobilesafe.utils.encrypt.ByteUtils;
 import com.itheima.mobilesafe.utils.encrypt.EncryptUtils;

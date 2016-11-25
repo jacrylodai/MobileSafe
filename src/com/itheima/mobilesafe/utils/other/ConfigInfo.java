@@ -38,21 +38,41 @@ public class ConfigInfo {
 	 * 是否绑定SIM卡
 	 */
 	public static final String IS_BIND_SIM_CARD_KEY = "isBindSIMCardKey";
+
+	/**
+	 * Temp是否绑定SIM卡
+	 */
+	public static final String TEMP_IS_BIND_SIM_CARD_KEY = "tempIsBindSIMCardKey";
 	
 	/**
 	 * 绑定的SIM卡序列号
 	 */
 	public static final String SIM_CARD_SERIAL_NUMBER_KEY = "SIMCardSerialNumberKey"; 
+
+	/**
+	 * Temp绑定的SIM卡序列号
+	 */
+	public static final String TEMP_SIM_CARD_SERIAL_NUMBER_KEY = "TempSIMCardSerialNumberKey"; 
 	
 	/**
 	 * 安全号码，报警号码
 	 */
 	public static final String ALERT_PHONE_NUMBER_KEY = "alertPhoneNumberKey";
+
+	/**
+	 * TEMP安全号码，报警号码
+	 */
+	public static final String TEMP_ALERT_PHONE_NUMBER_KEY = "tempAlertPhoneNumberKey";
 	
 	/**
 	 * 是否开启防盗保护
 	 */
 	public static final String IS_ANTI_THIEF_PROTECT_OPEN_KEY = "isAntiThiefProtectOpenKey";
+
+	/**
+	 * TEMP是否开启防盗保护
+	 */
+	public static final String TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY = "tempIsAntiThiefProtectOpenKey";
 	
 	/**
 	 * 经度
