@@ -1,23 +1,36 @@
 package com.itheima.mobilesafe.activity.antithief;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.itheima.mobilesafe.R;
+import com.itheima.mobilesafe.receiver.MyDeviceAdminReceiver;
 import com.itheima.mobilesafe.utils.other.ConfigInfo;
 
 public class InitConfigFourthActivity extends BaseInitConfigActivity{
 	
-	private CheckBox cbSetAntiThiefProtect;
+	private static final String TAG = InitConfigFourthActivity.class.getSimpleName();
+	
+	private static final int REQUEST_CODE_ENABLE_ADMIN = 1;
+	
+	private CheckBox cbSetDeviceAdmin;
 	
 	private SharedPreferences pref;
+
+	private DevicePolicyManager mDPM;
+	
+	private ComponentName mDeviceAdmin;
+	
+	private boolean mAdminActive;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,47 +38,36 @@ public class InitConfigFourthActivity extends BaseInitConfigActivity{
 		setContentView(R.layout.activity_init_config_fourth);
 		
 		pref = getSharedPreferences(ConfigInfo.CONFIG_FILE_NAME, MODE_PRIVATE);
-				
-		boolean isAntiThiefProtectOpen = 
-				pref.getBoolean(ConfigInfo.TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY, false);
-		if(isAntiThiefProtectOpen){
-			if(validataIsOpenAntiThiefAvailable(false) == false){
-				//业务验证失败，无法开启防盗保护，设置防盗保护开启状态为false
-				isAntiThiefProtectOpen = false;
-				
-				SharedPreferences.Editor editor = pref.edit();
-				editor.putBoolean(ConfigInfo.TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY, false);
-				editor.commit();
-			}
-		}
 		
-		cbSetAntiThiefProtect = (CheckBox) findViewById(R.id.cb_set_anti_thief_protect);
-		cbSetAntiThiefProtect.setChecked(isAntiThiefProtectOpen);
+		mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+		mDeviceAdmin = new ComponentName(this, MyDeviceAdminReceiver.class);
 		
-		cbSetAntiThiefProtect.setOnCheckedChangeListener(
+		mAdminActive = isActiveAdmin();
+				
+		cbSetDeviceAdmin = (CheckBox) findViewById(R.id.cb_set_device_admin);
+
+		cbSetDeviceAdmin.setChecked(mAdminActive);
+		
+		cbSetDeviceAdmin.setOnCheckedChangeListener(
 				new CompoundButton.OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				
-				if(isChecked){
-					
-					if(validataIsOpenAntiThiefAvailable(true)){
-						
-						SharedPreferences.Editor editor = pref.edit();
-						editor.putBoolean(ConfigInfo.TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY, true);
-						editor.commit();
-						
-					}else{
-						//开启防盗保护失败，回置单选框状态为false
-						cbSetAntiThiefProtect.setChecked(false);
-					}
-				}else{
 
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putBoolean(ConfigInfo.TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY, false);
-					editor.commit();
-				}
+				Log.i(TAG, "onCheckedChanged");
+				
+				boolean value = isChecked;
+                if (value) {
+                    // Launch the activity to have the user enable our admin.
+                    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdmin);
+                    intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                            getString(R.string.add_admin_extra_app_text));
+                    startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+                } else {
+                    mDPM.removeActiveAdmin(mDeviceAdmin);
+                    mAdminActive = false;
+                }
 			}
 		});
 
@@ -91,71 +93,38 @@ public class InitConfigFourthActivity extends BaseInitConfigActivity{
 		
 	}
 	
-	/**
-	 * 业务验证
-	 * 如果开启防盗保护，则必须绑定SIM卡，并设置安全号码
-	 * 如果没有开启防盗保护，是否绑定SIM卡，是否设置安全号码都没有关系
-	 * @return
-	 */
-	private boolean validataIsOpenAntiThiefAvailable(boolean isShowMessage){
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		Log.i(TAG, "resultCode:"+resultCode);
+		
+		switch (requestCode) {
+		case REQUEST_CODE_ENABLE_ADMIN:
+			
+			mAdminActive = isActiveAdmin();
+			if(mAdminActive == false){
+				cbSetDeviceAdmin.setChecked(false);
+			}
+			break;
 
-		boolean isBindSIMCard = 
-				pref.getBoolean(ConfigInfo.TEMP_IS_BIND_SIM_CARD_KEY,false);
-		String simCardSerialNumber = 
-				pref.getString(ConfigInfo.TEMP_SIM_CARD_SERIAL_NUMBER_KEY,"");
-		String alertPhoneNumber = 
-				pref.getString(ConfigInfo.TEMP_ALERT_PHONE_NUMBER_KEY, "");
-		
-		if(isBindSIMCard == false){
-			if(isShowMessage){
-				Toast.makeText(this,
-						"开启失败，开启防盗保护必须绑定SIM卡，" +
-						"请回到之前的步骤进行设置", Toast.LENGTH_LONG).show();
-			}
-			return false;
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
 		}
-		if(TextUtils.isEmpty(alertPhoneNumber)){
-			if(isShowMessage){
-				Toast.makeText(this,
-						"开启失败，开启防盗保护必须设置安全号码，" +
-						"请回到上一步进行设置", Toast.LENGTH_LONG).show();
-			}
-			return false;
-		}
-		
-		return true;
 	}
-
-	/**
-	 * 把临时temp保存的业务变量真正的保存起来
-	 * 因为已经通过业务验证
-	 */
+	
+	private boolean isActiveAdmin() {
+	    return mDPM.isAdminActive(mDeviceAdmin);
+	}
+	
 	@Override
 	protected void showNextConfig(){
-		
-		
-		boolean isBindSIMCard = 
-				pref.getBoolean(ConfigInfo.TEMP_IS_BIND_SIM_CARD_KEY,false);
-		String simCardSerialNumber = 
-				pref.getString(ConfigInfo.TEMP_SIM_CARD_SERIAL_NUMBER_KEY,"");
-		String alertPhoneNumber = 
-				pref.getString(ConfigInfo.TEMP_ALERT_PHONE_NUMBER_KEY, "");
-		boolean isAntiThiefProtectOpen = 
-				pref.getBoolean(ConfigInfo.TEMP_IS_ANTI_THIEF_PROTECT_OPEN_KEY, false);
-		
-		SharedPreferences.Editor editor = pref.edit();
-		
-		editor.putBoolean(ConfigInfo.IS_ANTI_THIEF_INIT_CONFIG_KEY, true);
-		
-		editor.putBoolean(ConfigInfo.IS_BIND_SIM_CARD_KEY, isBindSIMCard);
-		editor.putString(ConfigInfo.SIM_CARD_SERIAL_NUMBER_KEY, simCardSerialNumber);
-		editor.putString(ConfigInfo.ALERT_PHONE_NUMBER_KEY, alertPhoneNumber);
-		editor.putBoolean(ConfigInfo.IS_ANTI_THIEF_PROTECT_OPEN_KEY, isAntiThiefProtectOpen);
-		
-		editor.commit();
-		
+
+		Intent intent = new Intent(this,InitConfigFifthActivity.class);
+		startActivity(intent);
 		finish();
 		
+		overridePendingTransition(R.anim.next_enter_anim, R.anim.next_exit_anim);
 	}
 
 	@Override

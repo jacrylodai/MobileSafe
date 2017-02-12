@@ -4,5 +4,19 @@
     <string name="app_name">MobileSafe</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+ <!-- ============================== -->
+    <!--  app/device policies examples strings     -->
+    <!-- ============================== -->
 
+    <!-- Manifest strings -->
+    <string name="activity_sample_device_admin">App/Device Admin</string>
+    <string name="sample_device_admin">手机安全卫士</string>
+    <string name="sample_device_admin_description">可以远程锁屏，远程删除数据</string>
+    <string name="add_admin_extra_app_text">设置超级管理权限，远程锁屏，远程删除数据需要此权限</string>
+
+    <!-- Strings used by the sample DeviceAdminReceiver -->
+    <string name="admin_receiver_status">手机卫士超级管理权限: %1$s</string>
+    <string name="admin_receiver_status_enabled">启用</string>
+    <string name="admin_receiver_status_disabled">关闭</string>
 </resources>

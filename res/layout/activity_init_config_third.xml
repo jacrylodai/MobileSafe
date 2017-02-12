@@ -11,12 +11,12 @@
         />
     
     <TextView 
-        android:text="SIM卡变更后"
+        android:text="1.SIM卡变更后，报警短信会发送给安全号码"
         style="@style/ContentStyle"
         />
     
     <TextView 
-        android:text="报警短信会发送给安全号码"
+        android:text="2.一旦手机遗失，需要通过安全号码来发送控制命令，可以远程获取GPS，远程擦除数据"
         style="@style/ContentStyle"
         />
     

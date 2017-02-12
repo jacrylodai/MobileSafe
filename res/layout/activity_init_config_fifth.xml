@@ -6,24 +6,23 @@
     android:orientation="vertical" >
     
     <TextView 
-        android:text="4.设置超级管理权限"
+        android:text="5.最后一步，马上就完了"
         style="@style/TitleStyle"
         />
     
     <TextView 
-        android:text="通过设置超级管理权限，可以实现远程锁屏，远程删除数据"
+        android:text="如果你决定开启防盗保护，请勾选下面单选框，如果你还没决定好，你可以取消单选框"
         style="@style/ContentStyle"
         />
     
     <CheckBox 
-        android:id="@+id/cb_set_device_admin"
+        android:id="@+id/cb_set_anti_thief_protect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="开启超级管理权限"
+        android:text="开启防盗保护"
         style="@style/CustomCheckboxTheme"
         />
-    
     
     <LinearLayout 
         android:layout_width="match_parent"

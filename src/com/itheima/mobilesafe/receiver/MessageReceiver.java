@@ -1,6 +1,8 @@
 package com.itheima.mobilesafe.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,9 +20,19 @@ public class MessageReceiver extends BroadcastReceiver{
 	
 	private static final String TAG = "MessageReceiver";
 
+	private DevicePolicyManager mDPM;
+	
+	private ComponentName mDeviceAdmin;
+	
+	private boolean mActiveAdmin;
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
+		mDPM = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+		mDeviceAdmin = new ComponentName(context, MyDeviceAdminReceiver.class);
+		mActiveAdmin = mDPM.isAdminActive(mDeviceAdmin);
+		
 		Bundle bundle = intent.getExtras();
 		Object[] pdus = (Object[]) bundle.get("pdus");
 		SmsMessage[] messageArr = new SmsMessage[pdus.length];
@@ -66,7 +78,24 @@ public class MessageReceiver extends BroadcastReceiver{
 							context.startService(locationIntent);
 							
 							abortBroadcast();
-						}
+						}else
+							if(content.equals("#*wipedata*#")){
+								LogUtil.d(TAG, "远程删除数据");
+								
+								if(mActiveAdmin){
+									mDPM.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+								}
+								
+								abortBroadcast();
+							}else
+								if(content.equals("#*lockscreen*#")){
+									LogUtil.d(TAG, "远程锁屏");
+									
+									if(mActiveAdmin){
+										mDPM.lockNow();
+									}
+									abortBroadcast();
+								}
 				}
 			}
 		}

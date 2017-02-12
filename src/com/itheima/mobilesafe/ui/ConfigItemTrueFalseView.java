@@ -49,9 +49,13 @@ public class ConfigItemTrueFalseView extends LinearLayout{
 				"http://schemas.android.com/apk/res/com.itheima.mobilesafe"
 				, "config_item_description");
 		
-		setConfigItemTitle(configItemTitle);
+		if(configItemTitle != null){
+			setConfigItemTitle(configItemTitle);
+		}
 		
-		setConfigItemDescription(configItemDescription);
+		if(configItemDescription != null){
+			setConfigItemDescription(configItemDescription);
+		}
 		
 	}
 
